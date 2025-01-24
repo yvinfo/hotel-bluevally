@@ -2,7 +2,56 @@
 include "../conn.php";
 session_start();
 
+$err = "";
+
+if (isset($_POST["add_room"])) {
+
+    $rno = $_POST["rno"];
+    $nbed = $_POST["nbed"];
+    $fac = $_POST["fac"];
+    $fac1= implode(",",$fac);
+    $price = $_POST["price"];
+    $rimg = $_POST["rimg"];
+
+    $sql = "insert into room values('$rno','$nbed','$fac1','$price','$rimg')";
+    $res = mysqli_query($conn, $sql);
+    $err = "Room Added Succesfully";
+}
 ?>
+<?php
+include "../conn.php";
+
+$err1 = "";
+
+if(isset($_POST["change_room"]))
+{
+    $rno = $_POST["rno"];
+    $nbed = $_POST["nbed"];
+    $fac = $_POST["fac"];
+    $fac1= implode(",",$fac);
+    $price = $_POST["price"];
+    $rimg = $_POST["rimg"];
+
+    $sql=$sql="update room set nbed='{$nbed}',fac='{$fac1}',price='{$price}',rimg='{$rimg}' where rno='{$rno}'";
+    $res=mysqli_query($conn,$sql);
+     $err = "room change succesfuly";
+
+}
+?>
+
+<?php
+    include "../conn.php";
+
+    $err3 =" ";
+    if(isset($_POST["delete_room"])){
+        $rno = $_POST["rno"];
+
+        $sql="delete from room where rno={$rno}";
+        $res=mysqli_query($conn, $sql) or die("Query unsuceesful");
+        $err3 = "room delete succesfully";
+    }
+?>
+
 
 
 <!DOCTYPE html>
@@ -12,7 +61,6 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>online food delivery</title>
   <link rel="stylesheet" href="../css/admin.css">
-  
 </head>
 <body>
 
@@ -38,7 +86,7 @@ session_start();
                     </div>
                 </a>
                 <br>
-                <br>
+                
                 <b style="font-family: sans-serif;font-size:13px;">MANAGE ITEM</b>
                 <br>
                 <br>
@@ -61,7 +109,7 @@ session_start();
                     </div>
                 </a>
                 <br>
-                <br>
+                
                 <b style="font-family: sans-serif;font-size:13px;">MANAGE SERVICES</b>
                 <br>
                 <br>
@@ -91,9 +139,10 @@ session_start();
                     <div class="side_ad">
                         <img src="../image/menu.png" alt="home" width="40px">
                         <p style="margin-top: 16px;margin-left:10px">
-                            BOOKED ROOM
+                        BOOKED ROOM
                         </p>
                     </div>
+                </a>
                 </a>
                 <br>
                 <a href="feedback.php" style="text-decoration: none;color:black">
@@ -108,44 +157,58 @@ session_start();
 
         <!--------- second div ----------->
         <div class="sidebar sidebar1">
-        <div class="box">
-                <br>
-                <b style="font-family:sans-serif;">TOTAL FEEDBACKS</b>
-                <br><br><br>
-                <table class="table table2">
-                    <tr>
-                        <th class="border">no</th>    
-                        <th class="border">Name</th>
-                        <th class="border">Phone No</th>
-                        <th class="border">Date</th>
-                        <th class="border">Review</th>
-                        <th class="border">Action</th>
-                    </tr>
+            <div class="manage">
+                <h2>room details</h2>
+
+                <form class="room-form" action="" method="post">
+
+                    <div class="room">
+                    <label class="lab">room No</label>
+                    <input type="number" class="in" name="rno" value="" >
+                    </div>
+
+                    <div class="room">
+                    <label class="lab">No of bed</label>
+                    <input type="number" class="in" name="nbed" value="" >
+                    </div>
+                
+                    <div class="room room1">
+                    <label class="lab lab1">facility</label><br>
+                    <div class="cbox">
+                        <input type="checkbox" name="fac[]" value="Ac-Room"  class=checkbox> &nbsp; <font>ac-room</font><br>
+                        <input type="checkbox" name="fac[]" value="Room Service"  class=checkbox> &nbsp; <font>room service</font><br>
+                        <input type="checkbox" name="fac[]" value="Free Wifi"  class=checkbox> &nbsp; <font>free wifi</font><br>
+                        <input type="checkbox" name="fac[]" value="Free Parking"  class=checkbox> &nbsp; <font>free parking</font><br>
+                        <input type="checkbox" name="fac[]" value="Free Gym"  class=checkbox> &nbsp; <font>free gym</font><br>
+                        <input type="checkbox" name="fac[]" value="Laudary"  class=checkbox> &nbsp; <font>laudary</font><br>
+                    </div>
+                    </div>
+
+                    <div class="room">
+                    <label class="lab">price</label>
+                    <input type="number" class="in" name="price" value="" >
+                    </div>
+
+                    <div class="room">
+                    <label class="lab">room img</label>
+                    <input type="file" class=" in1" name="rimg" value="" >
+                    </div>
+
+                    <button type="submit" class="submit" name="add_room">add room</button>
+                    <button type="submit" class="submit" name="change_room">update room</button>
+                    <button type="submit" class="submit" name="delete_room">delete room</button>
+                    <br><br>
+                    <span style="color:blue;font-weight:bold;font-family:sans-serif;font-size:15px;">
                     <?php
-                    
-                    $sql = "select * from feedback";
-                    $res = mysqli_query($conn, $sql);
-                    while ($roww = mysqli_fetch_assoc($res)) {
+                    echo "&nbsp;&nbsp;&nbsp;" . $err;
+                    echo "&nbsp;&nbsp;&nbsp;" . $err1;
+                    echo "&nbsp;&nbsp;&nbsp;" . $err3;
                     ?>
-                        <tr>
-                        
-                            <td class="border1 bo2"><?php echo $roww["no"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["name"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["phone"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["date"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["rev"]; ?></td>
-                            <td class="border1 bo2">
-                            <a href="feedback_delete.php?no=<?php echo $roww['no']; ?>" class="btne">delete</a>
-                            </td>
-                            
-                        </tr>
-                    <?php
-                    }
-                    ?>
-                </table>
+                 </span>
+                </form>
+
             </div>
         </div>
-            </div>
     
     </div>
 

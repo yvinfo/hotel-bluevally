@@ -1,9 +1,7 @@
 <?php
 include "../conn.php";
 session_start();
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +10,6 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>online food delivery</title>
   <link rel="stylesheet" href="../css/admin.css">
-  
 </head>
 <body>
 
@@ -37,7 +34,7 @@ session_start();
                         </p>
                     </div>
                 </a>
-                <br>
+                
                 <br>
                 <b style="font-family: sans-serif;font-size:13px;">MANAGE ITEM</b>
                 <br>
@@ -60,7 +57,7 @@ session_start();
                         </p>
                     </div>
                 </a>
-                <br>
+                
                 <br>
                 <b style="font-family: sans-serif;font-size:13px;">MANAGE SERVICES</b>
                 <br>
@@ -91,7 +88,7 @@ session_start();
                     <div class="side_ad">
                         <img src="../image/menu.png" alt="home" width="40px">
                         <p style="margin-top: 16px;margin-left:10px">
-                            BOOKED ROOM
+                        BOOKED ROOM
                         </p>
                     </div>
                 </a>
@@ -107,45 +104,41 @@ session_start();
         </div>
 
         <!--------- second div ----------->
-        <div class="sidebar sidebar1">
-        <div class="box">
-                <br>
-                <b style="font-family:sans-serif;">TOTAL FEEDBACKS</b>
+        <div class="sidebar1">
+        <div class="">
+            <br>
+                <b style="font-family:sans-serif;">ALL ROOMS</b>
                 <br><br><br>
-                <table class="table table2">
+                <table class="table table1">
                     <tr>
-                        <th class="border">no</th>    
-                        <th class="border">Name</th>
-                        <th class="border">Phone No</th>
-                        <th class="border">Date</th>
-                        <th class="border">Review</th>
-                        <th class="border">Action</th>
+                        <th class="border">RNO</th>    
+                        <th class="border">No.Bed</th>
+                        <th class="border">facility</th>
+                        <th class="border">Price</th>
+                        <th class="border">image</th>
                     </tr>
                     <?php
-                    
-                    $sql = "select * from feedback";
-                    $res = mysqli_query($conn, $sql);
-                    while ($roww = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <tr>
-                        
-                            <td class="border1 bo2"><?php echo $roww["no"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["name"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["phone"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["date"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["rev"]; ?></td>
-                            <td class="border1 bo2">
-                            <a href="feedback_delete.php?no=<?php echo $roww['no']; ?>" class="btne">delete</a>
-                            </td>
-                            
-                        </tr>
-                    <?php
-                    }
+                        $sql = "select * from room";
+                        $res = mysqli_query($conn,$sql);
+                        if(mysqli_num_rows($res)>0){
+                            while($row = mysqli_fetch_row($res)){
+
+                                echo " 
+                                <tr>
+                                    <td class='border1'>$row[0]</td>
+                                    <td class='border1'>$row[1]</td>
+                                    <td class='border1'>$row[2]</td>
+                                    <td class='border1'>$row[3]</td>
+                                    <td class='border1'><img src='../image/$row[4]' style='width:100px;height:100px;'></td>
+                                </tr>
+                                ";
+                            }
+                        }
                     ?>
                 </table>
             </div>
         </div>
-            </div>
+        </div>
     
     </div>
 

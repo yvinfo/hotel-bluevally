@@ -1,9 +1,7 @@
 <?php
 include "../conn.php";
 session_start();
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +10,8 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>online food delivery</title>
   <link rel="stylesheet" href="../css/admin.css">
-  
+  <link rel="stylesheet" href="../css/admin1.css">
+
 </head>
 <body>
 
@@ -37,7 +36,7 @@ session_start();
                         </p>
                     </div>
                 </a>
-                <br>
+                
                 <br>
                 <b style="font-family: sans-serif;font-size:13px;">MANAGE ITEM</b>
                 <br>
@@ -61,7 +60,7 @@ session_start();
                     </div>
                 </a>
                 <br>
-                <br>
+            
                 <b style="font-family: sans-serif;font-size:13px;">MANAGE SERVICES</b>
                 <br>
                 <br>
@@ -86,6 +85,7 @@ session_start();
                         <a href="refund.php">Refund</a>
                     </div>
                 </div>
+                
                 <br>
                 <a href="booked_room.php" style="text-decoration: none;color:black">
                     <div class="side_ad">
@@ -95,6 +95,7 @@ session_start();
                         </p>
                     </div>
                 </a>
+                
                 <br>
                 <a href="feedback.php" style="text-decoration: none;color:black">
                     <div class="side_ad">
@@ -110,34 +111,39 @@ session_start();
         <div class="sidebar sidebar1">
         <div class="box">
                 <br>
-                <b style="font-family:sans-serif;">TOTAL FEEDBACKS</b>
+                <b style="font-family:sans-serif;">TOTAL ROOMS</b>
                 <br><br><br>
-                <table class="table table2">
+                <table class="table">
                     <tr>
-                        <th class="border">no</th>    
+                        <th class="border">Bookno</th>
+                        <th class="border">Rno</th>    
                         <th class="border">Name</th>
-                        <th class="border">Phone No</th>
-                        <th class="border">Date</th>
-                        <th class="border">Review</th>
+                        <th class="border">pno</th>
+                        <th class="border">cin</th>
+                        <th class="border">cout</th>
+                        <th class="border">people</th>
+                        <th class="border">price</th>
+                        <th class="border">p status</th>
                         <th class="border">Action</th>
                     </tr>
                     <?php
-                    
-                    $sql = "select * from feedback";
+                    $sql = "select * from book where pstatus='paid'";
                     $res = mysqli_query($conn, $sql);
                     while ($roww = mysqli_fetch_assoc($res)) {
                     ?>
                         <tr>
-                        
                             <td class="border1 bo2"><?php echo $roww["no"]; ?></td>
+                            <td class="border1 bo2"><?php echo $roww["rno"]; ?></td>
                             <td class="border1 bo2"><?php echo $roww["name"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["phone"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["date"]; ?></td>
-                            <td class="border1 bo2"><?php echo $roww["rev"]; ?></td>
-                            <td class="border1 bo2">
-                            <a href="feedback_delete.php?no=<?php echo $roww['no']; ?>" class="btne">delete</a>
+                            <td class="border1 bo2"><?php echo $roww["pno"]; ?></td>
+                            <td class="border1 bo2"><?php echo $roww["cin"]; ?></td>
+                            <td class="border1 bo2"><?php echo $roww["cout"]; ?></td>
+                            <td class="border1 bo2"><?php echo $roww["peop"]; ?></td>
+                            <td class="border1 bo2"><?php echo $roww["price"]; ?></td>
+                            <td class="border1 bo2"><?php echo $roww["pstatus"]; ?></td>
+                            <td class="border1 bo2">   
+                                <a href="check_out.php?no=<?php echo $roww['no']; ?>" class="btne">check out</a>
                             </td>
-                            
                         </tr>
                     <?php
                     }
@@ -145,10 +151,9 @@ session_start();
                 </table>
             </div>
         </div>
-            </div>
-    
-    </div>
+        </div>
 
 
-</body>
+    </div> 
+  </body>
 </html>
